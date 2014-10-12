@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />              
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+	           <p:panel header="Uređivanje dokumenta" id="panel">   
+	          	 <h:form> 
+	          	 	
+	          	 	<p:growl id="messages" showDetail="true"/>  
+	          	 
+                	<table>
+	                	<tr>
+					    	<td class="left"><h:outputLabel for="kod" value="Šifra:" /></td>  
+					    	<td class="left">
+					    		<p:inputText id="kod" value="#{editDocSif.kod}" label="Šifra" required="true" requiredMessage="Niste unijeli šifru" validatorMessage="Šifra može imati najviše 20 znakova">
+					    			<f:validateLength minimum="1" maximum="20" />
+					    		</p:inputText>
+					    	</td>
+						</tr>
+						<tr>				  
+					    	<td class="left"><h:outputLabel for="naziv" value="Naziv:" /></td>
+					    	<td class="left">
+					    		<p:inputTextarea rows="5" cols="30" id="naziv" value="#{editDocSif.naziv}" required="true" requiredMessage="Niste unijeli naziv" validatorMessage="Naziv može imati najviše 55 znakova" autoResize="false">
+					    			<f:validateLength minimum="1" maximum="400" />
+					    		</p:inputTextarea>  
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="mjera" value="Mjera:" /></td>
+					    	<td class="left">
+					    		<p:selectOneMenu id="mjera" value="#{editDocSif.selected}" effect="fade" style="vertical-align:middle;">  
+		            				<f:selectItems value="#{editDocSif.mjeraList}"/>
+		        				</p:selectOneMenu> 
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="cijena" value="Cijena:" /></td>
+					    	<td class="left">
+					    		<p:inputText id="cijena" value="#{editDocSif.cijena}" label="Cijena" required="true" requiredMessage="Niste unijeli cijenu" validatorMessage="Neispravna cijena" autoResize="false">
+					    			<f:convertNumber minFractionDigits="2" />
+					    		</p:inputText>
+					    	</td>
+					  	</tr>
+					  	<tr>
+						  	<td class="left"><h:outputLabel for="aktivan" value="Aktivan:" /></td>
+						  	<td class="left"><p:selectBooleanCheckbox id="aktivan" value="#{editDocSif.status}" /></td>
+						</tr>
+				  	</table>
+				  	<h:panelGroup id="command" layout="block" style="text-align:left !important">
+						<p:commandButton value="Spremi" icon="ui-icon-document" actionListener="#{editDocSif.add}" update="messages"/>
+						<p:commandButton value="Odustani" icon="ui-icon-close" actionListener="#{editDocSif.cancel}" immediate="true"/>
+					</h:panelGroup>
+					</h:form>
+				</p:panel> 
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

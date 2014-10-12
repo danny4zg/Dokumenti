@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />             
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+				   <p:panel header="Pregled računa" id="panel">
+				   <p:fieldset legend="Subjekt" toggleable="true" toggleSpeed="500"> 
+				   		<table>
+				   			<tr>
+				   				<th class="left">Subjekt</th>
+				   				<th class="left">Adresa</th>
+				   				<th class="left">OIB</th>
+				   				<th class="left">Datum računa</th>
+				   				<th class="left">Broj računa</th>
+				   				<th class="left">Mjesec</th>
+				   			</tr>
+		                	<tr>
+						    	<td class="left"><h:outputText id="subjekt" value="#{racunViewBean.racun.subjekt.nazivSubjekt}"/></td>
+						    	<td class="left"><h:outputText id="adresa" value="#{racunViewBean.racun.subjekt.adresaSubjekt}"/></td>
+						    	<td class="left"><h:outputText id="oib" value="#{racunViewBean.racun.subjekt.oib}"/></td>
+						    	<td class="left">
+						    		<h:outputText id="datumObracuna" value="#{racunViewBean.racun.datumRacuna}">
+						    			<f:convertDateTime pattern="dd.MM.yyyy" />
+						    		</h:outputText>
+						    	</td>
+						    	<td class="left"><h:outputText id="brojRacuna" value="#{racunViewBean.racun.idRacun}"/></td>
+						    	<td class="left">
+						    		<h:outputText id="mjesecObracuna" value="#{racunViewBean.racun.datumRacuna}">
+						    			<f:convertDateTime pattern="MM.yyyy" />
+						    		</h:outputText>
+						    	</td>
+						    </tr>
+						</table>
+				   </p:fieldset> 
+				   <p:spacer width="20" height="5" />
+				   <p:fieldset legend="Detaljni podaci" toggleable="true" toggleSpeed="500">  
+				   		<h:form>
+				   		
+				   			<p:growl id="messages" />
+				   		
+		                	<table>
+			                	<tr>
+							    	<td class="left"><h:outputLabel for="datumPlacanja" value="Datum plaćanja:" /></td>  
+							    	<td class="left"><p:calendar id="datumPlacanja" value="#{racunViewBean.datumPlacanja}" label="Datum placanja" pattern="dd.MM.yyyy"/></td>
+									<td class="left"><h:outputLabel for="uplaceniIznos" value="Uplaćeni iznos:" /></td>  
+							    	<td class="left">
+							    		<p:inputText id="uplaceniIznos" value="#{racunViewBean.uplaceniIznos}" label="uplaceniIznos" required="true" requiredMessage="Iznos plaćanja je obavezan" validatorMessage="Unijeli ste neispravan iznos.">
+							    			<f:convertNumber minFractionDigits="2" />
+							    		</p:inputText>
+							    	</td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="ira" value="IRA:" /></td>  
+							    	<td class="left"><p:inputText id="ira" value="#{racunViewBean.ira}" label="ira" disabled="true"/></td>
+							    	<td class="left"><h:outputLabel for="iznos" value="Iznos:" /></td>  
+							    	<td class="left">
+							    		<p:inputText id="iznos" value="#{racunViewBean.iznos}" label="iznos" disabled="true" readonly="true">
+							    			<f:convertNumber minFractionDigits="2" />
+							    		</p:inputText>
+							    	</td>
+								</tr>
+							  	<tr>				  
+							    	<td class="left"><h:outputLabel for="statusPlacanja" value="Status plaćanja:" /></td>
+							    	<td class="left">
+							    		<p:inputText id="statusPlacanja" value="#{racunViewBean.statusPlacanja}" disabled="true" readonly="true"/>
+							    	</td>
+							  	</tr>		  	
+							</table>
+							<p:spacer width="20" height="5" />
+					  		<h:panelGroup id="command" layout="block" style="text-align:left !important">
+					  			<p:commandButton value="Spremi" icon="ui-icon-refresh" actionListener="#{racunViewBean.update}" rendered="#{racunViewBean.idStatusPlacanja.intValue() != 3}" update=":panel"/>
+								<p:commandButton value="Odustani" icon="ui-icon-refresh" actionListener="#{racunViewBean.cancel}" immediate="true"/>
+							</h:panelGroup>
+						</h:form>
+					</p:fieldset>
+				</p:panel> 
+	           
+				<p:spacer width="20" height="20" />
+					
+	           </div>
+	
+	           <div id="footer">
+               		<ui:include src="footer.xhtml" /> 
+           	   </div>
+	            
+	        </div>    
+	 	</h:body>
+</html>

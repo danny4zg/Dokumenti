@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="448" leftMargin="77" rightMargin="70" topMargin="50" bottomMargin="50" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.4641000000000042"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<detail>
+		<band height="742">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="141" width="448" height="39"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\tMinistarstva poljoprivrede, Uprava za veterinarstvo, na temelju članka 48. stavka 2. Zakona o veterinarstvu („Narodne novine“, br. 41/07, 55/11), u postupku odobravanja objekta ... na lokaciji ..., ... pokrenutom po zahtjevu stranke ..., ..., ..., donosi"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="192" width="448" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[R J E Š E N J E]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="44" y="70" width="127" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["322-14/12-12/5446"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="226" width="448" height="39"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1. Osniva se Stručno povjerenstvo za utvrđivanje propisanih uvjeta u objektu " + $F{name} + ", subjekta u poslovanju s nusproizvodima ..., ..., ..., na lokaciji ..., ... u sastavu:"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="70" width="46" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[KLASA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="84" width="52" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[URBROJ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="84" width="127" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["522-87/12-12/91-1"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="98" width="44" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Zagreb, "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="265" width="448" height="26"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2. Zadaća je Stručnog povjerenstva iz točke 1. ovoga rješenja utvrđivanje udovoljavanja navedenog objekta propisanim uvjetima."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="291" width="448" height="26"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["3. Stručno povjerenstvo treba zapisnički konstatirati činjenično stanje, te donijeti mišljenje u svezi točke 2. ovoga rješenja, na temelju kojega će ravnateljica donijeti rješenje o daljnjem postupku."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="318" width="448" height="26"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["4. O datumu utvrđivanja činjeničnog stanja u postupku odobravanja objekta iz točke 1. ovoga rješenja stranku i članove stručnog povjerenstva obavijestit će predsjednica povjerenstva naknadno."]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="44" y="98" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" x="237" y="597" width="211" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MINISTAR"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="550" width="448" height="30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Protiv ovog rješenja ne može se uložiti  žalba, ali se može pokrenuti upravni spor tužbom Upravnom sudu Republike Hrvatske u roku od 30 dana, od dana njegovog primitka."]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement positionType="Float" x="0" y="535" width="205" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false" isItalic="true" isUnderline="true"/>
+					<paragraph leftIndent="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Uputa o pravnom lijeku:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="357" width="448" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O b r a z l o ž e n j e"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="390" width="448" height="40"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\tStranka ..., ..., ..., podnosi ovoj Upravi dana ... zahtjev za utvrđivanjem udovoljavanja objekta iz točke 1. izreke ovoga rješenja odredbama propisa o nusproizvodima životinjskog podrijetla koji nisu za prehranu ljudi. KLASA: ..., URBROJ: ...."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="430" width="448" height="52"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\tNovčani iznos od 4.000,00 kuna, troškovi su ovoga tijela u svezi rada stručnog povjerenstva Ministarstva poljoprivrede, ribarstva i ruralnog razvoja, koje imenuje rješenjem ravnateljica Uprave za veterinarstvo u skladu s Odlukom o osnivanju stručnog povjerenstva i visini naknade u postupku utvrđivanja veterinarsko - zdravstvenih uvjeta u objektima koji posluju s nusproizvodima životinjskog podrijetla koji nisu za prehranu ljudi KLASA: 322-01/08-01/378, URBROJ: 525-6-08-1 od 26. lipnja 2008. godine."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="482" width="448" height="52"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Iznos od 520,00 kuna je upravna pristojba po Tar. br. 1. i 51. točka 8. Tarife upravnih pristojbi Zakona o upravnim pristojbama (Narodne novine, br. 8/96). Navedeni iznos prihod je Državnog proračuna Republike Hrvatske."+"\n"+
+"\tNa temelju podnesenog zahtjeva, a u skladu s odredbama članka 48. stavka 2. Zakona o veterinarstvu, članka -- Pravilnika o nusproizvodima životinjskog podrijetla koji nisu za prehranu ljudi („Narodne novine”, br. 87/09) te članka 13. Pravilnika o registraciji subjekata i odobravanju objekata u kojima posluju subjekti u poslovanju s nusproizvodima životinjskog podrijetla koji nisu za prehranu ljudi („Narodne novine“, br. 20/10), bilo je potrebno odrediti stručno povjerenstvo, u sastavu određenom u točki 1. izreke ovoga rješenja, a koje će obaviti pregled objekta u postupku odobravanja objekta iz točke 1. izreke ovoga rješenja."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="725" width="16" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="0" y="677" width="100" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dostaviti:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="694" width="432" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Uprava za veterinarstvo, Odjel veterinarskog javnog zdravstva, V.T."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="695" width="16" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="710" width="16" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="16" y="725" width="217" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pismohrana - ovdje"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="238" y="616" width="210" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tihomir Jakovina"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="710" width="240" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Uprava za veterinarske inspekcije"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="325" y="20" width="100" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[*P/123545]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

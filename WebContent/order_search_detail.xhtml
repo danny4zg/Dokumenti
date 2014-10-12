@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"  
+    xmlns:ui="http://java.sun.com/jsf/facelets">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />             
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+               <p:panel header="Podaci o narudžbi" id="panel1">   
+	          	 <h:form> 
+                	<table>
+	                	<tr>
+					    	<td class="left"><h:outputLabel for="rbr" value="Broj narudžbe: " /></td>  
+					    	<td class="left"><h:outputText id="rbr" value="#{ordSearchDetail.db.idNarudzbe}"/></td>
+						</tr>
+						<tr>
+					    	<td class="left"><h:outputLabel for="datum" value="Datum narudžbe: " /></td>  
+					    	<td class="left">
+					    		<h:outputText id="datum" value="#{ordSearchDetail.db.datumNarudzbe}">
+					    			<f:convertDateTime pattern="dd.MM.yyyy" /> 
+					    		</h:outputText>
+					    	</td>
+						</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="narucitelj" value="Naručitelj: " /></td>  
+					    	<td class="left"><h:outputText id="narucitelj" value="#{ordSearchDetail.db.narucitelj}"/></td>
+						</tr>
+					  	<tr>				  
+					    	<td class="left"></td>
+					    	<td class="left"><h:outputText id="adresa" value="#{ordSearchDetail.selNarucitelj.address}"/></td>
+					  	</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="tel" value="Tel: " /></td>  
+					    	<td class="left"><h:outputText id="tel" value="#{ordSearchDetail.selNarucitelj.tel}"/></td>
+						</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="fax" value="Fax: " /></td>  
+					    	<td class="left"><h:outputText id="fax" value="#{ordSearchDetail.selNarucitelj.fax}"/></td>
+						</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="veterinar" value="Naručitelj: " /></td>
+					    	<td class="left"><h:outputText id="veterinar" value="#{ordSearchDetail.vetKorisnik}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="status" value="Status: " /></td>
+					    	<td class="left"><h:outputText id="status" value="#{ordSearchDetail.db.status}"/></td>
+					  	</tr>
+				  	</table>
+				  	<h:panelGroup id="back" layout="block" style="text-align:left !important; margin-top:5px;">
+						<p:commandButton value="Natrag" icon="ui-icon-document" actionListener="#{ordSearchDetail.cancel}" />
+					</h:panelGroup>
+					</h:form>
+				</p:panel>	
+				
+				<p:spacer width="20" height="20" />
+            	
+            	<p:panel id="details" header="Dokumenti narudžbe">
+            	
+            		<p:growl id="messages1"/> 
+            		
+            		<h:panelGroup layout="block">
+				    	<ui:repeat var="item" value="#{ordSearchDetail.currList}" varStatus="status">
+				    		
+					    	<table>
+			                	<tr>
+							    	<td class="left"><h:outputLabel for="vrsta" value="Vrsta dokumenta: " /></td>  
+							    	<td class="left"><h:outputText id="vrsta" value="#{item.doc.code}"/></td>
+								</tr>
+								<tr>				  
+							    	<td class="left"><h:outputLabel for="dobavljac" value="Dobavljač: " /></td>
+							    	<td class="left"><h:outputText id="dobavljac" value="#{item.dobavljac}"/></td>
+							  	</tr>
+								<tr>
+							    	<td class="left"></td>  
+							    	<td class="left"><h:outputText id="opis" value="#{item.doc.desc}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="mjera" value="JMJ: " /></td>  
+							    	<td class="left"><h:outputText id="mjera" value="#{item.doc.unit}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="jed_cijena" value="Jed. cijena: " /></td>  
+							    	<td class="left">
+							    		<h:outputText id="jed_cijena" value="#{item.doc.price}">
+							    			<f:convertNumber minFractionDigits="2" />
+							    		</h:outputText> kn
+							    	</td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="kolicina" value="Količina: " /></td>  
+							    	<td class="left"><h:outputText id="kolicina" value="#{item.kolicina}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="dodijeljeno" value="Dodijeljeno: " /></td>  
+							    	<td class="left"><h:outputText id="dodijeljeno" value="#{item.kolicina}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="cijena" value="Cijena: " /></td>  
+							    	<td class="left">
+							    		<h:outputText id="cijena" value="#{item.cijena}">
+							    			<f:convertNumber minFractionDigits="2" />
+							    		</h:outputText> kn
+							    	</td>
+								</tr>
+							</table>
+							<p:separator/>  
+							<p:spacer width="20" height="20" />
+							
+				    	</ui:repeat>
+				    </h:panelGroup>
+				    
+            	</p:panel>
+            	
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Config name="templateapp">
+		<Config name="akcijaCache">
+			<Property name="CACHE_ID" value="akcijaCache" type="java.lang.String"/>
+			<Property name="CACHE_NAME" value="akcijaCache" type="java.lang.String"/>
+			<Property name="CACHE_TYPE_ID" value="DB" type="java.lang.String"/>
+			<Property name="CACHE_LOAD_T_ID" value="LAZY" type="java.lang.String"/>
+			<Property name="MODULE_ID" value="templateapp" type="java.lang.String"/>
+			<Property name="SQL_ID" value="akcijaCacheSelect" type="java.lang.String"/>
+			<Property name="KEY_NAME" value="AKCIJA_ID" type="java.lang.String"/>
+			<Property name="VALUE_NAME" value="" type="java.lang.String"/>
+			<Property name="MAPPED_VALUE" value="1" type="java.lang.String"/>
+			<Property name="PROPERTY_CLASS" value="java.lang.Integer" type="java.lang.String"/>
+		</Config>
+	</Config>
+</Configuration>

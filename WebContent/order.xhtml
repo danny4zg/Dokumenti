@@ -1,0 +1,381 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />            
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+	           <p:panel header="Nova narudžba" id="panel">   
+	          	 <h:form> 
+	          	 	<h:panelGroup id="ddata" layout="block" style="text-align:left !important" rendered="#{order.step == 1}">
+                	<table>
+	                	<tr>
+					    	<td class="left"><h:outputLabel for="tip" value="Vrsta dokumenta:" /></td>  
+					    	<td class="left">
+					    		<p:inputText id="tip" value="#{order.selDoc.code}" label="Vrsta dokumenta" disabled="true" readonly="true"/>
+			    				<p:commandButton id="basic" value="..." onclick="dlg.show();" type="button" />  
+					    	</td>
+						</tr>
+						<tr>				  
+					    	<td class="left"></td>
+					    	<td class="left">
+					    		<h:outputText id="opis" value="#{order.selDoc.desc}" />   
+					    	</td>
+					  	</tr>
+						<tr>				  
+					    	<td class="left"><h:outputLabel for="mjera" value="JMJ:" /></td>
+					    	<td class="left">
+					    		<h:outputText id="mjera" value="#{order.selDoc.unit}"/>  
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="kolicina" value="Količina:" /></td>
+					    	<td class="left">
+					    		<p:inputText id="kolicina" value="#{order.kolicina}" label="Količina">
+					    			<p:ajax event="blur" update="cijena" listener="#{order.calc}"/>  
+					    		</p:inputText>
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="dobavljac" value="Dobavljač:" /></td>
+					    	<td class="left">
+					    		<p:inputText id="dobavljac" value="#{order.selDobavljac.naziv}" label="Dobavljač" disabled="true" readonly="true"/>
+			    				<p:commandButton id="basic2" value="..." onclick="dlg1.show();" type="button" />  
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="cijena" value="Cijena:" /></td>
+					    	<td class="left">
+					    		<p:inputText id="cijena" value="#{order.cijena}" label="Cijena" readonly="true">
+					    			<f:convertNumber minFractionDigits="2" />
+					    		</p:inputText>
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="napomena" value="Napomena:" /></td>
+					    	<td class="left">
+					    		<p:inputTextarea id="napomena" rows="5" cols="30" autoresize="true" maxlength="4000" value="#{order.napomena}" label="Napomena"/>
+					    	</td>
+					  	</tr>
+				  	</table>
+				  	
+				  	</h:panelGroup>
+				  	
+				  	<h:panelGroup id="command" layout="block" style="text-align:left !important" rendered="#{order.step == 1}">
+						<p:commandButton value="Dodaj" icon="ui-icon-document" actionListener="#{order.add}" update=":basket"/>
+						<p:commandButton value="Obriši" icon="ui-icon-refresh" actionListener="#{order.clear}" update=":panel,,:dialog,:dialog1"/>
+					</h:panelGroup>
+					
+					<h:panelGroup id="testconfirm" layout="block" style="text-align:left !important" rendered="#{order.step > 1}">
+				  		<table>
+		                	<tr>
+		                		<td class="left"><h:outputLabel for="narucitelj" value="Naručitelj:" /></td>
+						    	<td class="left">
+						    		<h:outputText id="narucitelj" value="#{order.narucitelj.name}"/>  
+					    		</td>
+						    </tr>
+						    <tr>
+		                		<td class="left"></td>
+						    	<td class="left">
+						    		<h:outputText id="nar_adresa" value="#{order.narucitelj.address}"/>  
+					    		</td>
+						    </tr>
+						    <tr>
+		                		<td class="left"><h:outputLabel for="tel" value="Tel:" /></td>
+						    	<td class="left">
+						    		<h:outputText id="tel" value="#{login.tel}"/>  
+					    		</td>
+						    </tr>
+						    <tr>
+		                		<td class="left"><h:outputLabel for="email" value="Email:" /></td>
+						    	<td class="left">
+						    		<h:outputText id="email" value="#{login.email}"/>  
+					    		</td>
+						    </tr>
+						    <tr>
+		                		<td class="left"><h:outputLabel for="korisnik_ime" value="Naručitelj:" /></td>
+						    	<td class="left">
+						    		<h:outputText id="korisnik_ime" value="#{order.ub.ime}"/>  
+						    		<h:outputText id="korisnik_prezime" value=" #{order.ub.prezime}"/> 
+					    		</td>
+						    </tr>
+						    <tr>
+		                		<td class="left"><h:outputLabel for="datum" value="Datum:" /></td>
+						    	<td class="left">
+						    		<h:outputText id="datum" value="#{order.datumNarudzbe}">
+						    			<f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+						    		</h:outputText>  
+					    		</td>
+						    </tr>
+						    <tr>
+		                		<td class="left"><h:outputLabel for="status_narudzbe" value="Status:" rendered="#{order.step == 3}"/></td>
+						    	<td class="left">
+						    		<h:outputText id="status_narudzbe" value="Narudžbe zaprimljena" rendered="#{order.step == 3}"/>  
+					    		</td>
+						    </tr>
+					    </table>
+				  	</h:panelGroup>
+					
+					<h:panelGroup id="commandBack" layout="block" style="text-align:left !important" rendered="#{order.step == 3}">
+						<p:commandButton value="Natrag" icon="ui-icon-document" actionListener="#{order.cancel}"/>
+					</h:panelGroup>
+					
+					</h:form>
+					
+				</p:panel> 
+				
+				<p:dialog id="dialog" header="Odabir dokumenta" widgetVar="dlg" dynamic="true">  
+					    
+				  	<p:panel header="Dokumenti" id="display">
+				    	<h:form prependId="false">  
+						    <p:dataTable id="basic" var="o" value="#{order.docList}"
+						    	paginator="true" rows="10"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka"
+	            				rowKey="#{o.idDocument}"
+	            				selectionMode="single"
+	            				selection="#{order.selDoc}"
+	            				draggable="false"
+	            				resizable="false">  
+	            				
+	            				<p:ajax event="rowSelect"  update=":panel, :dialog1" oncomplete="dlg.hide()" listener="#{order.handleClose}"/>
+	            				
+						        <p:column id="modelHeader" filterBy="#{o.idDocument}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Rbr  
+						            </f:facet>  
+						           	<h:outputText value="#{o.idDocument}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column filterBy="#{o.code}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Šifra  
+						            </f:facet>  
+						            <h:outputText value="#{o.code}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column filterBy="#{o.desc}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Naziv 
+						            </f:facet>  
+						            <h:outputText value="#{o.desc}" style="float:left !important; text-align: left !important"/>  
+						        </p:column>  
+						  
+						        <p:column filterBy="#{o.unit}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Mjera  
+						            </f:facet>  
+						            <h:outputText value="#{o.unit}" style="float:left !important"/>  
+						        </p:column>
+						        
+						        <p:column filterBy="#{o.price}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Cijena (kn)
+						            </f:facet>  
+						            <h:outputText value="#{o.price}" style="float:right !important">
+						            	<f:convertNumber minFractionDigits="2" />
+						            </h:outputText>  
+						        </p:column>
+						        
+						        <p:column filterBy="#{o.multiply}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Pakovanje  
+						            </f:facet>  
+						            <h:outputText value="#{o.multiply} kom" style="float:right !important"/>  
+						        </p:column>
+						    </p:dataTable>  
+						    
+						</h:form>    
+					</p:panel>  
+				</p:dialog>
+				
+				<p:dialog id="dialog1" header="Odabir dobavljača" widgetVar="dlg1" dynamic="true">  
+					    
+				  	<p:panel header="Dobavljač" id="display1">
+				    	<h:form prependId="false">  
+						    <p:dataTable var="o" value="#{order.orgList}"
+						    	paginator="true" rows="10"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka"
+	            				rowKey="#{o.idOrganizacija}"
+	            				selectionMode="single"
+	            				selection="#{order.selDobavljac}"
+	            				draggable="false"
+	            				resizable="false">  
+	            				
+	            				<p:ajax event="rowSelect"  update=":panel" oncomplete="dlg1.hide()" listener="#{order.handleClose2}"/>
+	            				
+						        <p:column id="modelHeader" filterBy="#{o.idOrganizacija}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Rbr  
+						            </f:facet>  
+						           	<h:outputText value="#{o.idOrganizacija}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column filterBy="#{o.naziv}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Naziv 
+						            </f:facet>  
+						            <h:outputText value="#{o.naziv}" style="float:left !important; text-align: left !important"/>  
+						        </p:column>  
+						  
+						        <p:column>  
+						            <f:facet name="header" filterBy="#{o.cijena}" filterMatchMode="contains">  
+						                    Cijena 
+						            </f:facet>
+						            <h:outputText value="kn" style="float:right !important; margin-left: 2px !important;"/>    
+						            <h:outputText value="#{o.cijena}" style="float:right !important">
+						            	<f:convertNumber minFractionDigits="2" />
+						            </h:outputText>  
+						        </p:column>  
+
+						    </p:dataTable>  
+						    
+						</h:form>    
+					</p:panel>  
+				</p:dialog>
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Košarica" id="basket">
+				    <h:form prependId="false">  
+				    
+				    	<p:growl id="growl"/> 
+				    
+					    <p:dataTable id="stavke" var="o" value="#{order.orderList}"
+					    	paginator="true" rows="50"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka">  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Šifra  
+					            </f:facet>  
+					            <h:outputText value="#{o.doc.code}" style="float:left !important; text-align: left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.doc.desc}" style="float:left !important; text-align: left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    JMJ 
+					            </f:facet>  
+					            <h:outputText value="#{o.doc.unit}" style="float:left !important"/>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Jed. cijena (kn)
+					            </f:facet>  
+					            <h:outputText value="#{o.doc.price}" style="float:right !important">
+					            	<f:convertNumber minFractionDigits="2" />
+					            </h:outputText>  
+					        </p:column> 
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Količina  
+					            </f:facet>  
+					            <h:outputText value="#{o.kolicina}" style="float:left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Cijena (kn)  
+					            </f:facet>  
+					            
+					            <h:outputText value="#{o.cijena}" style="float:right !important">
+					            	<f:convertNumber minFractionDigits="2" />
+					            </h:outputText>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Dobavljač  
+					            </f:facet>  
+					            <h:outputText value="#{o.dobavljac.naziv}" style="float:left !important; text-align: left !important"/>  
+					        </p:column> 
+					        
+					        <p:column rendered="#{order.step == 1}">  
+					            <p:commandLink onclick="deleteDialog.show()"  action="#{order.setParam}">
+					            	<f:setPropertyActionListener target="#{order.selected}" value="#{o.id}" />
+					            	<f:attribute name="orderID" value="#{o.id}"/>
+			    					<p:graphicImage value="/img/close2.png"/> 
+			    				</p:commandLink>
+					        </p:column> 
+					        
+					    </p:dataTable>  
+					    
+					    <h:panelGroup id="continue" layout="block" style="text-align:left !important; margin-top:10px;" rendered="#{order.step == 1}">
+					    	<p:commandButton value="Dalje" icon="ui-icon-refresh" actionListener="#{order.next}" update=":basket, :panel"/>
+					    </h:panelGroup>
+					    
+					    <h:panelGroup id="command2" layout="block" style="text-align:left !important; margin-top:10px;" rendered="#{order.step == 2}">
+						   
+						    <p:selectBooleanCheckbox value="#{order.confirm}" /> 
+						    <h:outputText value="Potvrđujem kako su svi podaci ispravni." />
+						    <br/>
+						    <p:commandButton value="Potvrdi" icon="ui-icon-check" style="margin-top:5px;" onclick="statusDialog.show()" onstart="" oncomplete="statusDialog.hide()" action="#{order.potvrdi}" update=":basket, :panel"/>
+						</h:panelGroup>  
+					</h:form>    
+				</p:panel>
+				
+				
+            </div>
+    	
+    		<div id="testDel">
+            	<p:confirmDialog id="deleteDialogW" message="Želite li obrisati dokument iz košarice?" header="Brisanje" severity="alert" widgetVar="deleteDialog">            
+					<h:form>
+						<p:commandButton id="confirm" value="Da" update=":basket" oncomplete="deleteDialog.hide()" action="#{order.delete}" />
+						<p:commandButton id="decline" value="Ne" onclick="deleteDialog.hide()" type="button" />   
+					</h:form>
+				</p:confirmDialog>
+            </div>
+    	
+    		<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">  
+			    <p:graphicImage value="/img/loading.gif"/>  
+			</p:dialog> 
+    	
+            <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+            </div>
+            
+        </div>    
+ 	</h:body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+      http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+   version="2.0">
+  <!--  Empty for this simple case. Managed bean name automatically
+        derived from bean class name. Bean scope is request by default.
+        Results pages automatically derived from return value of action controller.  
+        
+        From JSF 2.0 tutorial at http://www.coreservlets.com/JSF-Tutorial/jsf2/ -->
+    
+    <!--   
+   <managed-bean>
+        <managed-bean-name>HealthPlanBean</managed-bean-name>
+        <managed-bean-class>coreservlets.HealthPlanBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean> 
+        
+   <managed-bean>
+        <managed-bean-name>LocVillagesFacade</managed-bean-name>
+        <managed-bean-class>hr.kingict.svis.web.facade.LocVillagesFacade</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean> 
+    -->     
+    
+    <converter>
+		<converter-id>DateConverter</converter-id>
+		<converter-class>hr.kingict.svis.web.converter.DateConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>DatetimeConverter</converter-id>
+		<converter-class>hr.kingict.svis.web.converter.DatetimeConverter</converter-class>
+	</converter>
+	
+	<converter>
+        <converter-id>BigDecimalConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.BigDecimalConverter</converter-class>
+    </converter>
+    
+    <converter>
+        <converter-id>BigDecimalZeroConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.BigDecimalZeroConverter</converter-class>
+    </converter>
+    
+    <converter>
+        <converter-id>IntegerConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.IntegerConverter</converter-class>      
+    </converter>
+    
+    <converter>
+        <converter-id>LongConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.LongConverter</converter-class>      
+    </converter>
+    
+     <converter>
+        <converter-id>GenericConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.GenericConverter</converter-class>      
+    </converter>
+    
+    <converter>
+        <converter-id>ObjectConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.ObjectConverter</converter-class>      
+    </converter>
+    
+    <converter>
+        <converter-id>LookupConverter</converter-id>
+        <converter-class>hr.kingict.svis.web.converter.LookupConverter</converter-class>      
+    </converter>
+    
+</faces-config>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"   
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />              
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+                <p:panel header="Podaci o veterinarskoj organizaciji" id="panel">    
+                	<table>
+	                	<tr>
+					    	<td class="left">Naziv:</td>  
+					    	<td class="left"><h:outputText value="#{vetOrgView.org.name}" /></td>
+						</tr>
+						<tr>				  
+					    	<td class="left">OIB:</td>
+					    	<td class="left"><h:outputText value="#{vetOrgView.org.oib}" /></td>
+					  	</tr>
+						<tr>				  
+					    	<td class="left">Adresa:</td>
+					    	<td class="left"><h:outputText value="#{vetOrgView.org.address}" /></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left">Telefon:</td>
+					    	<td class="left"><h:outputText value="#{vetOrgView.org.tel}" /></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left">Fax:</td>
+					    	<td class="left"><h:outputText value="#{vetOrgView.org.fax}" /></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left">Email:</td>
+					    	<td class="left"><h:outputText value="#{vetOrgView.org.email}" /></td>
+					  	</tr>
+					  	
+				  	</table>
+				    <h:panelGroup id="command" layout="block" style="text-align:left !important">
+			  			<h:form>
+       						<p:commandButton actionListener="#{vetOrgView.doEdit}" value="Uredi" update=":command, :display, :display2">
+   								<f:attribute name="edit" value="true" />
+							</p:commandButton>
+							
+							<p:commandButton actionListener="#{vetOrgView.cancel}" rendered="#{vetOrgView.edit}" value="Odustani" update=":command, :display, :display2">
+  								<f:attribute name="edit" value="false" />
+							</p:commandButton>
+							
+							<p:commandButton actionListener="#{vetOrgView.cancel2}" rendered="#{not vetOrgView.edit}" value="Odustani" />
+						</h:form>
+					</h:panelGroup>
+				</p:panel> 
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Dokumenti" id="display">
+				    <h:form prependId="false">  
+					    <p:dataTable  var="o" value="#{vetOrgView.docList}"
+					    	paginator="true" rows="50"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka">   
+            				
+					        <p:column id="modelHeader">  
+					            <f:facet name="header">  
+					                    Rbr  
+					            </f:facet>
+    							<h:outputText value="#{o.idOrgDocument}" style="float:left !important"/>
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Kod 
+					            </f:facet>  
+					            <h:outputText value="#{o.code}" style="float:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.desc}" style="float:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Država  
+					            </f:facet>  
+					            <h:outputText value="#{o.stateCode}" style="float:left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Jezik  
+					            </f:facet>  
+					            <h:outputText value="#{o.language}" style="float:left !important"/>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Mjera  
+					            </f:facet>  
+					            <h:outputText value="#{o.unit}" style="float:left !important"/>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Cijena  
+					            </f:facet>  
+					            <h:outputText value="#{o.price}" style="float:right !important">
+					            	<f:convertNumber minFractionDigits="2" />
+					            </h:outputText>  
+					        </p:column>
+					        
+					        <p:column>  
+			    				<p:commandLink onclick="deleteDialog1.show()" action="#{vetOrgView.setParam}" rendered="#{vetOrgView.edit}" immediate="true">
+					            	<f:setPropertyActionListener target="#{vetOrgView.selected}" value="#{o.idOrgDocument}" />
+			    					<p:graphicImage value="/img/close2.png"/> 
+			    				</p:commandLink>
+					        </p:column> 
+					    </p:dataTable> 
+					    
+					    <h:panelGroup layout="block" style="float:left !important; margin-top:5px;margin-bottom:5px;" rendered="#{vetOrgView.edit}"> 
+            				<p:commandButton actionListener="#{vetOrgView.deleteActionDoc}" value="Obriši sve" rendered="#{vetOrgView.docListSize > 0}" update=":display"/> 
+            				<p:commandButton actionListener="#{vetOrgView.doAdd}" value="Dodaj" rendered="#{vetOrgView.edit}"/> 
+						</h:panelGroup>
+						<h:panelGroup layout="block" style="clear:both;" rendered="#{vetOrgView.edit}"/>
+					</h:form>    
+				</p:panel>
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Certifikati" id="display2" rendered="false">
+				    <h:form prependId="false">  
+					    <p:dataTable  var="o" value="#{vetOrgView.lazyModel}"
+					    	paginator="true" rows="25"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka">
+            				   
+					        <p:column id="modelHeader">  
+					            <f:facet name="header">  
+					                    Rbr  
+					            </f:facet>
+    							<h:outputText value="#{o.idCertifikat}" style="float:left !important"/>
+					        </p:column>  
+					  
+					         <p:column>  
+					            <f:facet name="header">  
+					                    Šifra  
+					            </f:facet>  
+					            <h:outputText value="#{o.kodCertifikat}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivCertifikat}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Mjera  
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivMjera}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Jezik  
+					            </f:facet>  
+					            <h:outputText value="#{o.jeziciTekst}" style="float:left !important; text-align:left !important"/>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Država  
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivDrzava}" style="float:left !important; text-align:left !important"/>  
+					        </p:column> 
+					          
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Vrijedi od  
+					            </f:facet>  
+					            <h:outputText value="#{o.datumVrijediOd}" style="float:left !important">
+					            	<f:convertDateTime pattern="dd.MM.yyyy" />
+					            </h:outputText>  
+					        </p:column> 
+					        
+					        <p:column>  
+			    				<p:commandLink onclick="deleteDialog2.show()" action="#{vetOrgView.setParam}" rendered="#{vetOrgView.edit}" immediate="true">
+					            	<f:setPropertyActionListener target="#{vetOrgView.selectedCert}" value="#{o.idCertifikat}" />
+					            	<f:attribute name="idCertifikat" value="#{o.idCertifikat}"/>
+			    					<p:graphicImage value="/img/close2.png"/> 
+			    				</p:commandLink>
+					        </p:column> 
+					    </p:dataTable> 
+					    
+					    <h:panelGroup layout="block" style="float:left !important; margin-top:5px;margin-bottom:5px;" rendered="#{vetOrgView.edit}"> 
+            				<p:commandButton actionListener="#{vetOrgView.deleteActionCert}" value="Obriši sve" rendered="#{vetOrgView.certListSize > 0}" update=":display2"/> 
+            				<p:commandButton actionListener="#{vetOrgView.doAddCert}" value="Dodaj" rendered="#{vetOrgView.edit}"/> 
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" style="clear:both;" rendered="#{vetOrgView.edit}"/>
+					</h:form>    
+				</p:panel>
+				
+				<p:spacer width="20" height="20" />
+            </div>
+            
+            <div id="testDel1">
+            	<p:confirmDialog id="deleteDialogW1" message="Želite li obrisati dokument?" header="Brisanje" severity="alert" widgetVar="deleteDialog1">            
+					<h:form>
+						<p:commandButton id="confirm1" value="Da" update=":display" oncomplete="deleteDialog1.hide()" actionListener="#{vetOrgView.delete}" />
+						<p:commandButton id="decline1" value="Ne" onclick="deleteDialog1.hide()" type="button" />   
+					</h:form>
+				</p:confirmDialog>
+            </div>
+            
+            <div id="testDel2">
+            	<p:confirmDialog id="deleteDialogW2" message="Želite li obrisati certifikat?" header="Brisanje" severity="alert" widgetVar="deleteDialog2">            
+					<h:form>
+						<p:commandButton id="confirm2" value="Da" update=":display2" oncomplete="deleteDialog2.hide()" actionListener="#{vetOrgView.deleteCert}" />
+						<p:commandButton id="decline2" value="Ne" onclick="deleteDialog2.hide()" type="button" />   
+					</h:form>
+				</p:confirmDialog>
+            </div>
+            
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

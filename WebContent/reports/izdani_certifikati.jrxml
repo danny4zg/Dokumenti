@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="izdani_certifikati" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="rownum" class="java.lang.Number"/>
+	<field name="d_issue" class="java.util.Date"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="serial_no" class="java.lang.String"/>
+	<field name="tip" class="java.lang.String"/>
+	<field name="odobrena_km" class="java.lang.String"/>
+	<field name="ovlastena_osoba" class="java.lang.String"/>
+	<field name="broj" class="java.lang.String"/>
+	<field name="subjekt" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="33" height="45"/>
+				<textElement/>
+				<text><![CDATA[Red. broj]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="0" width="70" height="45"/>
+				<textElement/>
+				<text><![CDATA[Datum izdavanja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="0" width="100" height="45"/>
+				<textElement/>
+				<text><![CDATA[Oznaka (HVI)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="0" width="100" height="45"/>
+				<textElement/>
+				<text><![CDATA[Vrsta certifikata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="0" width="56" height="45"/>
+				<textElement/>
+				<text><![CDATA[Prijeđeni kilometri]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="0" width="134" height="45"/>
+				<textElement/>
+				<text><![CDATA[Broj certifikata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="0" width="129" height="45"/>
+				<textElement/>
+				<text><![CDATA[Ime i prezime osobe ovlaštene za izdavanje certifikata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="665" y="0" width="137" height="45"/>
+				<textElement/>
+				<text><![CDATA[Subjekt kojem je izdan certifikat (potpis i pečat)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="622" y="0" width="43" height="45"/>
+				<textElement/>
+				<text><![CDATA[VKB]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="33" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{rownum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="33" y="0" width="70" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{d_issue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="0" width="134" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{serial_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="0" width="56" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{odobrena_km}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="622" y="0" width="43" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{broj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="665" y="0" width="137" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{subjekt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="129" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ovlastena_osoba}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tip}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

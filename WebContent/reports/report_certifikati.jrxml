@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certifikati" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select t1.id_certificate, listagg(t2.name,', ') within group (order by t1.id) as jezici, t3.TEXT as naziv_cert, t3.code, t3.sm_states_id, t4.code as drzava_code, t4.TEXT as drzava, t3.id_measure, t5.name as mjera, t3.status, t3.id_type, t6.naziv as tip, t3.d_change, t3.valid_from, t3.valid_to, t3.notes, t3.document_name, t3.serial_no, t3.serija, t3.price
+					from vis_ex.cert_certificates t3
+					left join vis_ex.cert_cert_lang t1 on (t1.id_certificate = t3.id)
+					left join sm.sm_languages t2 on (t1.id_language = t2.id_language)
+					left join sm.sm_states t4 on (t3.sm_states_id = t4.id)
+					left join vis_ex.cert_measure t5 on (t3.id_measure = t5.id_measure)
+					left join vis_ex.cert_type t6 on (t3.id_type = t6.id_type)
+					where t1.activity = 1 and t3.activity = 1
+					group by t1.id_certificate, t3.TEXT, t3.code, t3.sm_states_id, t4.code, t4.TEXT, t3.id_measure, t5.name, t3.status, t3.id_type, t6.naziv, t3.d_change, t3.valid_from, t3.valid_to, t3.notes, t3.document_name, t3.serial_no, t3.serija, t3.price
+					order by t1.id_certificate, t3.code]]>
+	</queryString>
+	<field name="ID_CERTIFICATE" class="java.math.BigDecimal"/>
+	<field name="JEZICI" class="java.lang.String"/>
+	<field name="NAZIV_CERT" class="java.lang.String"/>
+	<field name="CODE" class="java.lang.String"/>
+	<field name="SM_STATES_ID" class="java.math.BigDecimal"/>
+	<field name="DRZAVA_CODE" class="java.lang.String"/>
+	<field name="DRZAVA" class="java.lang.String"/>
+	<field name="ID_MEASURE" class="java.math.BigDecimal"/>
+	<field name="MJERA" class="java.lang.String"/>
+	<field name="STATUS" class="java.math.BigDecimal"/>
+	<field name="ID_TYPE" class="java.math.BigDecimal"/>
+	<field name="TIP" class="java.lang.String"/>
+	<field name="D_CHANGE" class="java.sql.Timestamp"/>
+	<field name="VALID_FROM" class="java.sql.Timestamp"/>
+	<field name="VALID_TO" class="java.sql.Timestamp"/>
+	<field name="NOTES" class="java.lang.String"/>
+	<field name="DOCUMENT_NAME" class="java.lang.String"/>
+	<field name="SERIAL_NO" class="java.lang.String"/>
+	<field name="SERIJA" class="java.lang.String"/>
+	<field name="PRICE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="746" y="0" width="56" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cijena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="0" width="75" height="20"/>
+				<textElement/>
+				<text><![CDATA[Datum promjene]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="0" width="71" height="20"/>
+				<textElement/>
+				<text><![CDATA[Vrijedi od]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="66" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="0" width="73" height="20"/>
+				<textElement/>
+				<text><![CDATA[Jezici]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="40" height="20"/>
+				<textElement/>
+				<text><![CDATA[Šifra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="20"/>
+				<textElement/>
+				<text><![CDATA[Rbr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="512" y="0" width="72" height="20"/>
+				<textElement/>
+				<text><![CDATA[Vrijedi do]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="147" height="20"/>
+				<textElement/>
+				<text><![CDATA[Naziv]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="666" y="0" width="80" height="20"/>
+				<textElement/>
+				<text><![CDATA[Mjera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="584" y="0" width="82" height="20"/>
+				<textElement/>
+				<text><![CDATA[Država]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="114" splitType="Stretch">
+			<textField pattern="#,##0.00 ¤ ">
+				<reportElement x="746" y="0" width="56" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PRICE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="true">
+				<reportElement x="366" y="0" width="75" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{D_CHANGE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="true">
+				<reportElement x="441" y="0" width="71" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{VALID_FROM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="0" width="66" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{TIP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="0" width="73" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{JEZICI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="40" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="40" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ID_CERTIFICATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="true">
+				<reportElement x="512" y="0" width="72" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{VALID_TO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="0" width="147" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NAZIV_CERT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="666" y="0" width="80" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{MJERA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="584" y="0" width="82" height="114"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DRZAVA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

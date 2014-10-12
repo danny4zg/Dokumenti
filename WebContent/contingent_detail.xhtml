@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />          
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+	           <p:panel header="Podaci o kontingentu" id="panel">   
+	          	 <h:form> 
+                	<table>
+                		<tr>				  
+					    	<td class="left"><h:outputLabel for="id" value="Šifra kontingenta:" /></td>
+					    	<td class="left"><h:outputText id="id" value="#{editContingent.con.idContingent}"/></td>
+					  	</tr>
+						<tr>				  
+					    	<td class="left"><h:outputLabel for="vrsta" value="Vrsta barkoda:" /></td>
+					    	<td class="left"><h:outputText id="vrsta" value="#{editContingent.con.barcodeType}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="datum" value="Datum kreiranja:" /></td>
+					    	<td class="left">
+					    		<h:outputText id="datum" value="#{editContingent.con.createDate}">
+					    			<f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+					    		</h:outputText>
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="broj" value="Broj barkodova:" /></td>
+					    	<td class="left"><h:outputText id="broj" value="#{editContingent.con.amount}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="od" value="Od:" /></td>
+					    	<td class="left"><h:outputText id="od" value="#{editContingent.con.barcodeFrom}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="do" value="Od:" /></td>
+					    	<td class="left"><h:outputText id="do" value="#{editContingent.con.barcodeTo}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="sl" value="Broj slobodnih:" /></td>
+					    	<td class="left"><h:outputText id="sl" value="#{editContingent.con.available}"/></td>
+					  	</tr>
+				  	</table>
+				  	<h:panelGroup id="command" layout="block" style="text-align:left !important">
+						<p:commandButton value="Odustani" icon="ui-icon-refresh" actionListener="#{editContingent.cancel}" update=":panel"/>
+					</h:panelGroup>
+					</h:form>
+				</p:panel> 
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Popis barkodova" id="display">
+				    <h:form prependId="false">  
+					    <p:dataGrid id="basic" var="o" value="#{editContingent.lazyModel}"
+					    	paginator="true" rows="30"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka">  
+            				
+            				<h:panelGrid columns="1" style="width:100%" rendered="#{editContingent.currentDataPageSize() == 1}">
+            					 <h:outputText value="#{o.barkod}" rendered="#{o.status == 1}" style="color:green;"/>
+            					 <h:outputText value="#{o.barkod}" rendered="#{o.status == 2}" style="color:blue;"/>
+            					 <h:outputText value="#{o.barkod}" rendered="#{o.status == 4}" style="color:red;"/>
+            				</h:panelGrid> 
+            				
+            				<h:panelGrid columns="1" rendered="#{editContingent.currentDataPageSize() == 2}">
+            					 <h:outputText value="#{o.barkod}" rendered="#{o.status == 1}" style="color:green;"/>
+            					 <h:outputText value="#{o.barkod}" rendered="#{o.status == 2}" style="color:blue;"/>
+            					 <h:outputText value="#{o.barkod}" rendered="#{o.status == 4}" style="color:red;"/>
+            				</h:panelGrid> 
+					  
+					    </p:dataGrid>  
+					</h:form>    
+				</p:panel>
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

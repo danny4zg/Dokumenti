@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />              
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+            
+            <div id="main">
+            	
+            	<p:spacer width="20" height="20"/>
+            	
+            	<h:panelGroup id="editor" layout="block">
+		           <p:panel header="Narudžbe" id="panel2">   
+		          	 <h:form> 
+	                	<table> 
+		                	<tr>
+						    	<td class="left"><h:outputLabel for="narucitelj" value="Naručitelj: " /></td>  
+						    	<td class="left">
+						    		<p:selectOneMenu id="narucitelj" value="#{editOrdReturnConf.selectedNarucitelj}" effect="fade" style="vertical-align:middle;">  
+			            				<p:ajax listener="#{editOrdReturnConf.naruciteljValueChange}" update=":panel2"/> 
+			            				<f:selectItems value="#{editOrdReturnConf.naruciteljList}"/>
+			        				</p:selectOneMenu> 
+						    	</td>
+							</tr>
+		                	<tr>
+						    	<td class="left"><h:outputLabel for="vdoc" value="Vrsta dokumenta: " /></td>  
+						    	<td class="left">
+						    		<p:selectOneMenu id="vdoc" value="#{editOrdReturnConf.selected}" effect="fade" style="vertical-align:middle;">  
+			            				<p:ajax listener="#{editOrdReturnConf.docValueChange}" update=":panel2"/> 
+			            				<f:selectItems value="#{editOrdReturnConf.pdocList}"/>
+			        				</p:selectOneMenu> 
+						    	</td>
+							</tr>
+							<tr>				  
+						    	<td class="left"></td>  
+						    	<td class="left"><h:outputText id="desc" value="#{editOrdReturnConf.selDoc.doc.desc}"/></td>
+						  	</tr>
+						  	<tr>				  
+						    	<td class="left"><h:outputLabel for="mjera" value="JMJ: " /></td>  
+						    	<td class="left"><h:outputText id="mjera" value="#{editOrdReturnConf.selDoc.doc.unit}"/></td>
+						  	</tr>
+						  	<tr>				  
+						    	<td class="left"><h:outputLabel for="kolicina" value="Količina: " /></td>
+						    	<td class="left"><h:outputText id="kolicina" value="#{editOrdReturnConf.selDoc.kolicina}"/></td>
+						  	</tr>
+						  	<tr>				  
+						    	<td class="left"><h:outputLabel for="serija1" value="Serija od: " /></td>
+						    	<td class="left"><p:inputText id="serija1" value="#{editOrdReturnConf.selDoc.serijskiBrojOd}" disabled="true"/></td>
+						  	</tr>
+						  	<tr>				  
+						    	<td class="left"><h:outputLabel for="serija2" value="Serija do: " /></td>
+						    	<td class="left"><p:inputText id="serija2" value="#{editOrdReturnConf.selDoc.serijskiBrojDo}" disabled="true"/></td>
+						  	</tr>
+						  	<tr>				  
+						    	<td class="left"><h:outputLabel for="datum" value="Datum: " /></td>
+						    	<td class="left">
+						    	 	<p:calendar id="datum" value="#{editOrdReturnConf.datum}" pattern="dd.MM.yyyy" mindate="#{editOrdReturnConf.min}" maxdate="#{editOrdReturnConf.max}" locale="hr" />
+						    	</td>
+						  	</tr>
+					  	</table>
+					  	
+					  	<h:panelGroup id="command" layout="block" style="text-align:left !important; margin-top:5px;">
+							  <p:commandButton value="Dodaj" icon="ui-icon-document" actionListener="#{editOrdReturnConf.add}" rendered="#{editOrdReturnConf.step &lt; 2}" update=":display2, :editor" />
+						</h:panelGroup>
+						</h:form>
+					</p:panel> 
+				</h:panelGroup>
+				
+				<p:spacer width="20" height="20" />
+				
+				<h:panelGroup id="tbl" layout="block">
+					<p:panel header="Vraćeni obrasci" id="display2">
+					    <h:form prependId="false">  
+					    
+					    	<p:growl id="messages2"/>  
+					    
+						    <p:dataTable id="basic3" var="o" value="#{editOrdReturnConf.assignList}"
+						    	paginator="true" rows="50"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka">  
+	
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Šifra  
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.doc.code}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Naziv 
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.doc.desc}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Ser. br. od 
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.serijskiBrojOd}" style="float:left !important"/>  
+						        </p:column> 
+						        
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Ser. br. do 
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.serijskiBrojDo}" style="float:left !important"/>  
+						        </p:column> 
+						        
+						        <p:column>  
+						            <f:facet name="header">  
+						                    JMJ 
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.doc.unit}" style="float:left !important"/>  
+						        </p:column>  
+						        
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Jed. cijena (kn)
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.doc.price}" style="float:right !important">
+						            	<f:convertNumber minFractionDigits="2" />
+						            </h:outputText>  
+					        	</p:column> 
+					        	
+					        	<p:column>  
+						            <f:facet name="header">  
+						                    Količina 
+						            </f:facet>  
+						            <h:outputText value="#{o.stavka.kolicina}" style="float:left !important"/>  
+						        </p:column> 
+						        
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Cijena (kn) 
+						            </f:facet> 
+						            
+						            <h:outputText value="kn" style="float:right !important; margin-left: 2px !important;"/>  
+						            <h:outputText value="#{o.stavka.cijena}" style="float:right !important">
+						            	<f:convertNumber minFractionDigits="2" />
+						            </h:outputText>  
+						        </p:column> 
+						        <p:column>  
+						            <h:commandLink action="#{editOrdReturnConf.delete}" rendered="#{editOrdReturnConf.step &lt; 2}">
+						            	<f:setPropertyActionListener target="#{editOrdReturnConf.delItem}" value="#{o.stavka.idStavkaNarudzbe}" />
+				    					<p:graphicImage value="/img/close2.png"/> 
+				    				</h:commandLink>
+						        </p:column> 
+						        
+						    </p:dataTable>  
+						    
+						    <div class="left" style="margin-top:10px;">
+							    <h:commandLink style="margin-right:5px;">  
+				    				<p:graphicImage value="/img/excel1.png" />  
+				    				<p:dataExporter type="xls" target="basic3" fileName="narudzbe" postProcessor="#{orderSearch.postProcessXLS}"/>  
+								</h:commandLink>
+						    </div>
+						    
+						    <h:panelGroup id="command2" layout="block" style="text-align:right !important; margin-top:5px;" rendered="#{editOrdReturnConf.step &lt; 2}">
+							  	<p:commandButton value="Potvrdi" icon="ui-icon-document" action="#{editOrdReturnConf.confirm}" onclick="confirmation.show()" type="button"/>
+								<p:commandButton value="Odustani" icon="ui-icon-document" action="#{editOrdReturnConf.cancel}" update=":editor, :panel2, :tbl"/>
+							</h:panelGroup>
+							
+							<p:confirmDialog id="confirmDialog" message="Želite li potvrditi dospijeće odabranih dokumenata?" header="Potvrda dospijeća" severity="alert" widgetVar="confirmation">  
+	        					<p:commandButton id="confirm" value="Da" update="messages2, :tbl, :panel2" oncomplete="confirmation.hide()" actionListener="#{editOrdReturnConf.checkConfirmStatus}" />  
+	        					<p:commandButton id="decline" value="Ne" onclick="confirmation.hide()" type="button" />   
+	    					</p:confirmDialog> 
+						</h:form>    
+					</p:panel>
+				</h:panelGroup>
+				
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

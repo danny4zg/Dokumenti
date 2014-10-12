@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />            
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+               <h:panelGroup id="certApp" layout="block">
+				    <p:panel header="Ispis certifikata" id="model_view">
+					    <h:form id="model_action">
+						    <table>
+			                	<tr>
+							    	<td class="left"><h:outputLabel for="serijskibroj" value="Serijski broj:" /></td>  
+							    	<td class="left"><h:outputText id="serijskibroj" value="#{approveCert.serijskiBroj}" label="Serijski broj" /></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="certifikat" value="Certifikat:" /></td>  
+							    	<td class="left"><h:outputText id="certifikat" value="#{approveCert.cert.kodCertifikat}" label="Certifikat" /></td>
+								</tr>
+								<tr>
+							    	<td class="left"></td>  
+							    	<td class="left"><h:outputText id="opis" value="#{approveCert.cert.nazivCertifikat}" label="Opis" /></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="org" value="Organizacija:" /></td>  
+							    	<td class="left"><h:outputText id="org" value="#{approveCert.org}" label="Organizacija" /></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="vet" value="Izdao:" /></td>  
+							    	<td class="left"><h:outputText id="vet" value="#{approveCert.veterinar}" label="Veterinar" /></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="datum" value="Datum ispisa:" /></td>  
+							    	<td class="left">
+							    		<h:outputText id="datum" value="#{approveCert.printDate}" label="Datum ispisa" >
+							    			<f:convertDateTime pattern="dd.MM.yyyy" />
+							    		</h:outputText>
+							    	</td>
+								</tr>
+								
+						  	</table>
+						    	
+				  			<h:panelGroup id="genCertPanel" layout="block" style="text-align:left !important; margin-top:5px;">
+							    <p:commandButton id="downloadLink" value="Pregled" ajax="false">  
+					    			<p:fileDownload value="#{approveCert.fileDownload}" />  
+								</p:commandButton>
+								 
+								<p:commandButton value="Odustani" icon="ui-icon-close" actionListener="#{approveCert.cancel}"/>
+								
+							</h:panelGroup>
+					    </h:form>
+				    </p:panel>
+		       </h:panelGroup>		
+            	
+               <p:spacer width="20" height="20" />	
+            	
+	           <p:panel header="Podaci o izdanom certifikatu" id="panel">   
+	          	 <h:form> 
+                	<table>
+                		<tr>
+					    	<td class="left"><h:outputLabel for="d1" value="Datum:" /></td>  
+					    	<td class="left"><p:calendar id="d1" value="#{approveCert.printDate}" pattern="dd.MM.yyyy" label="Datum" disabled="true"/></td>
+						</tr>
+						<tr>
+					    	<td class="left"><h:outputLabel for="locType" value="Vrsta lokacije:" /></td>  
+					    	<td class="left">
+					    		<div>
+					    			<div id="lcol" style="float:left !important;">
+							    		<p:selectOneMenu id="locType" value="#{approveCert.locType}" disabled="true">  
+							            	<f:selectItem itemLabel="Gospodarstvo" itemValue="1" />  
+							            	<f:selectItem itemLabel="Objekt" itemValue="2" />  
+							        	</p:selectOneMenu>
+						         	</div>	
+					        	</div>
+					    	</td>
+						</tr>					
+	                	<tr>
+					    	<td class="left">
+					    		<h:outputLabel for="subjekt1" value="Subjekt:" rendered="#{approveCert.locType == 2}"/>
+					    		<h:outputLabel for="subjekt2" value="Subjekt:" rendered="#{approveCert.locType == 1}"/>
+					    	</td>  
+					    	<td class="left">
+					    		<p:inputTextarea id="subjekt1" rows="10" cols="50" value="#{approveCert.selObjekt.subjekt}" disabled="true" rendered="#{approveCert.locType == 2}"/>
+								<p:inputTextarea id="subjekt2" rows="10" cols="50" value="#{approveCert.selFarma.subjekt}" disabled="true" rendered="#{approveCert.locType == 1}"/>
+							</td>
+							<td class="left">
+								<h:outputLabel for="objekt" value="VKB:" rendered="#{approveCert.locType == 2}"/>
+								<h:outputLabel for="farma" value="JIBG:" rendered="#{approveCert.locType == 1}"/>
+							</td>  
+							<td class="left">
+					    		<p:inputText id="objekt" value="#{approveCert.selObjekt.vkb}" disabled="true" rendered="#{approveCert.locType == 2}"/>
+					    		<p:inputText id="farma"  value="#{approveCert.selFarma.jibg}" disabled="true" rendered="#{approveCert.locType == 1}"/>
+							</td>
+						</tr>
+						<tr>
+					    	<td class="left">
+					    		<h:outputLabel for="oib1" value="OIB:" rendered="#{approveCert.locType == 2}"/>
+					    		<h:outputLabel for="oib2" value="OIB:" rendered="#{approveCert.locType == 1}"/>
+					    	</td>  
+					    	<td class="left">
+					    		<p:inputText id="oib1" value="#{approveCert.selObjekt.oib}" disabled="true" rendered="#{approveCert.locType == 2}"/>
+					    		<p:inputText id="oib2"  value="#{approveCert.selFarma.oib}" disabled="true" rendered="#{approveCert.locType == 1}"/>
+					    	</td>
+						</tr>
+						<tr>
+					    	<td class="left">
+					    		<h:outputLabel for="adresa1" value="Adresa:" rendered="#{approveCert.locType == 2}"/>
+					    		<h:outputLabel for="adresa2" value="Adresa:" rendered="#{approveCert.locType == 1}"/>
+					    	</td>  
+					    	<td class="left">
+					    		<p:inputTextarea id="adresa1" rows="10" cols="50" value="#{approveCert.selObjekt.adresa}" label="Adresa" disabled="true" rendered="#{approveCert.locType == 2}"/>
+					    		<p:inputTextarea id="adresa2" rows="10" cols="50" value="#{approveCert.selFarma.adresa}" label="Adresa" disabled="true" rendered="#{approveCert.locType == 1}"/>
+					    	</td>
+						</tr>
+						<tr>
+					    	<td class="left"><h:outputLabel for="drzava" value="Država:" /></td>  
+					    	<td class="left"><p:inputText id="drzava" value="HR" label="Država" disabled="true"/></td>
+						</tr>
+				  	</table>
+				 </h:form> 	
+				 
+				 <p:separator id="separator1"/>
+				 
+				 <h:panelGroup id="kilometraza">
+			  	 	<h:form>
+			  	 		
+			  	 		<p:growl id="messages" />  
+			  	 	
+					  	<table>
+	                		<tr>
+						    	<td class="left"><h:outputLabel for="km1" value="Kilometraža:" /></td>  
+						    	<td class="left">
+						    		<p:inputText id="km1" value="#{approveCert.km}" label="Kilometraža" disabled="true">
+						    			<f:validateLongRange minimum="0" maximum="1000"/>
+						    		</p:inputText>
+						    	</td>
+						    </tr>
+						    <tr>
+						    	<td class="left"><h:outputLabel for="km2" value="Odobrena kilometraža:" /></td>  
+						    	<td class="left">
+						    		<p:inputText id="km2" value="#{approveCert.odobrenaKm}" label="Odobrena kilometraža" disabled="#{not approveCert.viewMode}">
+						    			<f:validateLongRange minimum="0" maximum="1000"/>
+						    		</p:inputText>
+						    	</td>
+							</tr>
+							<tr>
+								<td class="left">
+									<p:commandButton value="Odobri" onclick="approveDialog.show()" id="approve" update="messages" icon="ui-icon-disk" rendered="#{approveCert.viewMode}"/>
+								</td>
+							</tr>
+						</table>
+						<p:confirmDialog id="approveDialogW" message="Jeste li sigurni?" header="Odobravanje" severity="alert" widgetVar="approveDialog">            
+						<p:commandButton id="confirm" value="Da" update=":kilometraza" oncomplete="approveDialog.hide()" actionListener="#{approveCert.approve}">
+						</p:commandButton>  
+						<p:commandButton id="decline" value="Ne" onclick="approveDialog.hide()" type="button" />   
+					</p:confirmDialog>
+					</h:form>
+				</h:panelGroup>
+				 
+				<p:separator id="separator2"/>  
+				
+				<p:spacer width="20" height="20" />
+				
+				<h:panelGroup id="unostbl">
+					<h:form>
+					  	<p:dataTable id="proizvodiCert" var="o" value="#{approveCert.listaSelCertProd}"
+					    	paginator="true" rows="50"  
+	           				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	           				paginatorPosition="bottom"
+	           				emptyMessage="Nema podataka">  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.prod.nazivProizvod}" style="float:left !important"/>  
+					        </p:column>
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Mjera 
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivMjera}" style="float:left !important"/>  
+					        </p:column>
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Količina 
+					            </f:facet>  
+					            
+					            <h:outputText value="#{o.kolicina}" style="float:left !important">
+					            	<f:convertNumber minFractionDigits="2" />
+					            </h:outputText>  
+					        </p:column>
+
+						</p:dataTable>
+					</h:form>
+				</h:panelGroup>
+				
+				<p:spacer width="20" height="20" />
+				
+			</p:panel> 
+			
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

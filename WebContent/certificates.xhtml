@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />             
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+	           <p:panel header="Pretraga certifikata" id="panel">   
+	          	 <h:form> 
+                	<table>
+	                	<tr>
+					    	<td class="left"><h:outputLabel for="kod" value="Šifra:" /></td>  
+					    	<td class="left"><p:inputText id="kod" value="#{certSif.kod}" label="Šifra" /></td>
+						</tr>
+						<tr>				  
+					    	<td class="left"><h:outputLabel for="naziv" value="Naziv:" /></td>
+					    	<td class="left"><p:inputText id="naziv" value="#{certSif.naziv}" label="Naziv"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="mjera" value="Mjera:" /></td>
+					    	<td class="left">
+					    		<p:selectManyCheckbox id="mjera" value="#{certSif.selectedMjera}">  
+						            <f:selectItems value="#{certSif.mjere}" />  
+						        </p:selectManyCheckbox>  
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="drzava" value="Država:" /></td>
+					    	<td class="left">
+					    		<p:inputText id="drzava" value="#{certSif.selectedDrzavaText}" label="Država" disabled="true" readonly="true"/>
+			    				<p:commandButton id="basic3" value="..." onclick="dlg1.show();" type="button" />  
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="jezik" value="Jezik:" /></td>
+					    	<td class="left">
+					    		<p:inputText id="jezik" value="#{certSif.selectedJeziciText}" label="Jezik" disabled="true" readonly="true"/>
+			    				<p:commandButton id="basic4" value="..." onclick="dlg2.show();" type="button" />  
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="datumOd" value="Datum od:" /></td>
+					    	<td class="left">
+					    		<p:calendar id="datumOd" value="#{certSif.datumOd}" label="Datum od" pattern="dd.MM.yyyy"/>
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="datumDo" value="Datum do:" /></td>
+					    	<td class="left">
+					    		<p:calendar id="datumDo" value="#{certSif.datumDo}" label="Datum do" pattern="dd.MM.yyyy"/>
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="pod" value="Područje:" /></td>
+					    	<td class="left">
+					    		<p:selectOneMenu value="#{certSif.podrucje}" id="pod">   
+					            	<f:selectItem itemLabel="Odaberite" itemValue="" /> 
+					            	<f:selectItem itemLabel="Životinje" itemValue="1" />  
+					           	 	<f:selectItem itemLabel="Proizvodi" itemValue="2" /> 
+					           	 	<f:selectItem itemLabel="Nusproizvodi" itemValue="3" />  
+					           	 	<f:selectItem itemLabel="Hrana za životinje" itemValue="4" /> 
+					            </p:selectOneMenu>
+					    	</td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="aktivno" value="Aktivno:" rendered="#{login.isAdmin}"/></td>
+					    	<td class="left">
+					    		<p:selectOneMenu value="#{certSif.aktivnost}" id="aktivno" rendered="#{login.isAdmin}">   
+					            	<f:selectItem itemLabel="DA" itemValue="1" /> 
+					            	<f:selectItem itemLabel="NE" itemValue="0" />  
+					            </p:selectOneMenu>
+					    	</td>
+					  	</tr>
+				  	</table>
+				  		<h:panelGroup id="command" layout="block" style="text-align:left !important">
+						  	<p:commandButton value="Nađi" icon="ui-icon-search" action="#{certSif.search}" onmousedown="basic.getPaginator().setPage(0)" update=":display" rendered="#{certSif.rolaUprava}"/>
+							<p:commandButton value="Nađi" icon="ui-icon-search" action="#{certSif.search}" onmousedown="basic1.getPaginator().setPage(0)" update=":display" rendered="#{not certSif.rolaUprava}"/>
+							<p:commandButton value="Obriši" icon="ui-icon-refresh" actionListener="#{certSif.clear}" update=":panel"/>
+							<p:commandButton value="Dodaj" style="float:right;" icon="ui-icon-document" actionListener="#{certSif.add}" rendered="#{login.isAdmin}"/>
+						</h:panelGroup>
+					</h:form>
+				</p:panel> 
+				
+				<p:dialog id="dialog1W" header="Odabir države izvoza" widgetVar="dlg1" dynamic="true">  
+					    
+				  	<p:panel header="Država" id="display1">
+				    	<h:form prependId="false">  
+						    <p:dataTable var="o" value="#{certSif.drzavaList}"
+						    	paginator="true" rows="10"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka"
+	            				rowKey="#{o.idDrzava}"
+	            				filterEvent="enter"
+	            				selectionMode="multiple"
+	            				selection="#{certSif.selectedDrzava}"
+	            				draggable="false"
+	            				resizable="false">  
+	            				
+						        <p:column id="modelHeader" filterBy="#{o.idDrzava}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    ID  
+						            </f:facet>  
+						           	<h:outputText value="#{o.idDrzava}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column filterBy="#{o.naziv}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Naziv 
+						            </f:facet>  
+						            <h:outputText value="#{o.naziv}" style="float:left !important"/>  
+						        </p:column>  
+						        
+						    </p:dataTable>  
+						    
+						    <h:panelGroup id="cmd4closeStates" layout="block" style="margin-top:5px; text-align:left !important">
+						    	<p:commandButton value="Odaberi" actionListener="#{certSif.selectDrzava}" update=":#{p:component('drzava')}" oncomplete="dlg1.hide()" />  
+							</h:panelGroup>
+						    
+						</h:form>    
+					</p:panel>  
+				</p:dialog>
+				
+				<p:dialog id="dialog2W" header="Odabir jezika certifikata" widgetVar="dlg2" dynamic="true">  
+					    
+				  	<p:panel header="Jezici" id="display1d">
+				    	<h:form prependId="false">  
+						    <p:dataTable var="o" value="#{certSif.jeziciList}"
+						    	paginator="true" rows="10"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka"
+	            				rowKey="#{o.idJezik}"
+	            				filterEvent="enter"
+	            				selectionMode="multiple"
+	            				selection="#{certSif.selectedJezici}"
+	            				draggable="false"
+	            				resizable="false">  
+	            				
+						        <p:column id="modelHeader" filterBy="#{o.idJezik}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    ID  
+						            </f:facet>  
+						           	<h:outputText value="#{o.idJezik}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column filterBy="#{o.nazivJezik}" filterMatchMode="contains">  
+						            <f:facet name="header">  
+						                    Naziv 
+						            </f:facet>  
+						            <h:outputText value="#{o.nazivJezik}" style="float:left !important"/>  
+						        </p:column>  
+	
+						    </p:dataTable>  
+						    
+						    <h:panelGroup id="cmd4close" layout="block" style="margin-top:5px; text-align:left !important">
+						    	<p:commandButton value="Odaberi" actionListener="#{certSif.selectLang}" update=":panel" oncomplete="dlg2.hide()" />  
+							</h:panelGroup>
+						</h:form>    
+					</p:panel>  
+				</p:dialog>
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Certifikati" id="display">
+				    <h:form prependId="false">  
+					    <p:dataTable id="basic" widgetVar="basicW" var="o" value="#{certSif.lazyModel}"
+					    	paginator="true" rows="50"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka"
+            				styleClass="myTable"
+            				rendered="#{certSif.rolaUprava}">  
+            				
+					        <p:column id="modelHeader">  
+					            <f:facet name="header">  
+					                    ID  
+					            </f:facet>  
+					             
+					            <h:commandLink id="detail" action="#{certSif.getDetail}" rendered="#{login.isAdmin}">  
+					            	<f:setPropertyActionListener target="#{certSif.selected}" value="#{o.idCertifikat}" />
+        							<h:outputText value="#{o.idCertifikat}" style="float:left !important"/>  
+    							</h:commandLink>
+    							<h:outputText value="#{o.idCertifikat}" style="float:left !important" rendered="#{not login.isAdmin}"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Šifra  
+					            </f:facet>  
+					            <h:outputText value="#{o.kodCertifikat}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivCertifikat}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Mjera  
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivMjera}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Jezik  
+					            </f:facet>  
+					            <h:outputText value="#{o.jeziciTekst}" style="float:left !important; text-align:left !important"/>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Država  
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivDrzava}" style="float:left !important; text-align:left !important"/>  
+					        </p:column> 
+					          
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Vrijedi od  
+					            </f:facet>  
+					            <h:outputText value="#{o.datumVrijediOd}" style="float:left !important">
+					            	<f:convertDateTime pattern="dd.MM.yyyy" />
+					            </h:outputText>  
+					        </p:column> 
+					        
+					        <p:column rendered="#{login.isAdmin}">  
+					            <p:commandLink onclick="deleteDialog.show()" rendered="#{certSif.rolaUprava}" action="#{certSif.setParam}">
+					            	<f:setPropertyActionListener target="#{certSif.selected}" value="#{o.idCertifikat}" />
+					            	<f:attribute name="idCertifikat" value="#{o.idCertifikat}"/>
+			    					<p:graphicImage value="/img/close2.png"/> 
+			    				</p:commandLink>
+					        </p:column> 
+					        
+					    </p:dataTable>  
+					    
+					    <p:dataTable id="basic1" widgetVar="basic1W" var="o" value="#{certSif.lazyModel}"
+					    	paginator="true" rows="50"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka"
+            				styleClass="myTable2"
+            				rendered="#{not certSif.rolaUprava}">  
+
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Šifra  
+					            </f:facet>  
+					            <h:outputText value="#{o.kodCertifikat}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivCertifikat}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Mjera  
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivMjera}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Jezik  
+					            </f:facet>  
+					            <h:outputText value="#{o.jeziciTekst}" style="float:left !important; text-align:left !important"/>  
+					        </p:column> 
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Država  
+					            </f:facet>  
+					            <h:outputText value="#{o.nazivDrzava}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					         
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Vrijedi od  
+					            </f:facet>  
+					            <h:outputText value="#{o.datumVrijediOd}" style="float:left !important">
+					            	<f:convertDateTime pattern="dd.MM.yyyy" />
+					            </h:outputText>  
+					        </p:column> 
+					        
+					        <p:column>  
+						        <h:commandLink action="#{certSif.issue}" rendered="#{not certSif.rolaUprava}">
+						            <f:setPropertyActionListener target="#{certSif.selected}" value="#{o.idCertifikat}" />
+				    				<p:graphicImage value="/img/print_small.png"/> 
+				    			</h:commandLink>
+					        </p:column> 
+					        
+					    </p:dataTable>
+					    
+					    <div class="left" style="margin-top:10px;">
+						    <h:commandLink style="margin-right:5px;" rendered="#{not certSif.rolaUprava}">  
+			    				<p:graphicImage value="/img/excel1.png" />  
+			    				<p:dataExporter type="xls" target="basic1" fileName="certifikati" postProcessor="#{orderSearch.postProcessXLS}" pageOnly="true"/>  
+							</h:commandLink>
+							<h:commandLink style="margin-right:5px;" rendered="#{certSif.rolaUprava}">  
+			    				<p:graphicImage value="/img/excel1.png" />  
+			    				<p:dataExporter type="xls" target="basic" fileName="certifikati" postProcessor="#{orderSearch.postProcessXLS}" pageOnly="true"/>  
+							</h:commandLink>
+							<h:commandLink id="popis" actionListener="#{certSif.generateExcel}">  
+        						<p:graphicImage value="/img/report.png" />
+        						<p:fileDownload value="#{certSif.fileDownload}" />  
+    						</h:commandLink>
+					    </div>
+		
+					</h:form>    
+				</p:panel>
+				
+            </div>
+            
+            <div id="testDel">
+            	<p:confirmDialog id="deleteDialogW" message="Želite li obrisati certifikat?" header="Brisanje" severity="alert" widgetVar="deleteDialog">            
+					<h:form>
+						<p:commandButton id="confirm" value="Da" update=":display" oncomplete="deleteDialog.hide()" actionListener="#{certSif.delete}" />
+						<p:commandButton id="decline" value="Ne" onclick="deleteDialog.hide()" type="button" />   
+					</h:form>
+				</p:confirmDialog>
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

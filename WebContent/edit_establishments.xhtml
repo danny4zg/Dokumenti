@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"   
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />              
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+                <p:panel header="Podaci o objektu" id="panel">    
+                	<table>
+	                	<tr>
+					    	<td class="left">Naziv:</td>  
+					    	<td class="left"><h:outputText value="#{estView.est.objekt}" /></td>
+						</tr>
+						<tr>				  
+					    	<td class="left">OIB:</td>
+					    	<td class="left"><h:outputText value="#{estView.est.oib}" /></td>
+					  	</tr>
+						<tr>				  
+					    	<td class="left">Adresa:</td>
+					    	<td class="left"><h:outputText value="#{estView.est.adresa}" /></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left">Telefon:</td>
+					    	<td class="left"><h:outputText value="#{estView.est.tel}" /></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left">Fax:</td>
+					    	<td class="left"><h:outputText value="#{estView.est.fax}" /></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left">Email:</td>
+					    	<td class="left"><h:outputText value="#{estView.est.email}" /></td>
+					  	</tr>
+					  	
+				  	</table>
+				    <h:panelGroup id="command" layout="block" style="text-align:left !important">
+			  			<h:form>
+       						<p:commandButton actionListener="#{estView.doEdit}" value="Uredi" update=":command, :display, :display">
+   								<f:attribute name="edit" value="true" />
+							</p:commandButton>
+							
+							<p:commandButton actionListener="#{estView.cancel}" rendered="#{estView.edit}" value="Odustani" update=":command, :display">
+  								<f:attribute name="edit" value="false" />
+							</p:commandButton>
+							
+							<p:commandButton actionListener="#{estView.cancel2}" rendered="#{not estView.edit}" value="Odustani" />
+						</h:form>
+					</h:panelGroup>
+				</p:panel> 
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Dokumenti" id="display">
+				    <h:form prependId="false">  
+					    <p:dataTable  var="o" value="#{estView.docList}"
+					    	paginator="true" rows="50"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka">   
+            				
+					        <p:column id="modelHeader">  
+					            <f:facet name="header">  
+					                    Rbr  
+					            </f:facet>
+    							<h:outputText value="#{o.idOrgDocument}" style="float:left !important"/>
+					        </p:column>  
+					  
+					        <p:column sortBy="#{o.code}">  
+					            <f:facet name="header">  
+					                    Kod 
+					            </f:facet>  
+					            <h:outputText value="#{o.code}" style="float:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column sortBy="#{o.desc}">  
+					            <f:facet name="header">  
+					                    Naziv 
+					            </f:facet>  
+					            <h:outputText value="#{o.desc}" style="float:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header" sortBy="#{o.stateCode}">  
+					                    Država  
+					            </f:facet>  
+					            <h:outputText value="#{o.stateCode}" style="float:left !important"/>  
+					        </p:column>  
+					        <p:column sortBy="#{o.language}">  
+					            <f:facet name="header">  
+					                    Jezik  
+					            </f:facet>  
+					            <h:outputText value="#{o.language}" style="float:left !important"/>  
+					        </p:column> 
+					        <p:column sortBy="#{o.unit}">  
+					            <f:facet name="header">  
+					                    Mjera  
+					            </f:facet>  
+					            <h:outputText value="#{o.unit}" style="float:left !important"/>  
+					        </p:column> 
+					        <p:column>  
+					            <f:facet name="header" sortBy="#{o.price}">  
+					                    Cijena  
+					            </f:facet>  
+					            <h:outputText value="#{o.price}" style="float:right !important">
+					            	<f:convertNumber minFractionDigits="2" />
+					            </h:outputText>  
+					        </p:column>
+					        <p:column>  
+			    				<p:commandLink onclick="deleteDialog.show()" action="#{estView.setParam}" rendered="#{estView.edit}" immediate="true">
+					            	<f:setPropertyActionListener target="#{estView.selected}" value="#{o.idOrgDocument}" />
+			    					<p:graphicImage value="/img/close2.png"/> 
+			    				</p:commandLink>
+					        </p:column> 
+					    </p:dataTable> 
+					    
+					    <h:panelGroup layout="block" style="float:left !important; margin-top:5px;margin-bottom:5px;" rendered="#{estView.edit}"> 
+            				<p:commandButton actionListener="#{estView.doAdd}" value="Dodaj"  /> 
+						</h:panelGroup>
+						<h:panelGroup layout="block" style="clear:both;" rendered="#{estView.edit}"/>
+					</h:form>    
+				</p:panel>
+				
+				<p:spacer width="20" height="20" />
+
+            </div>
+    	
+    		<div id="testDel">
+            	<p:confirmDialog id="deleteDialogW" message="Želite li obrisati dokument?" header="Brisanje" severity="alert" widgetVar="deleteDialog">            
+					<h:form>
+						<p:commandButton id="confirm" value="Da" update=":display" oncomplete="deleteDialog.hide()" actionListener="#{estView.delete}" />
+						<p:commandButton id="decline" value="Ne" onclick="deleteDialog.hide()" type="button" />   
+					</h:form>
+				</p:confirmDialog>
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

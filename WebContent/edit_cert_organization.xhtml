@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />            
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+                <p:panel header="Pridruži dokument tiskari" id="panel">    
+                	<h:form>
+                	
+                		<p:growl id="messages" />
+                		
+	                	<table>
+		                	<tr>
+						    	<td class="left"><h:outputLabel for="id" value="Certifikat:" /></td>  
+						    	<td class="left">
+						    		<p:inputText id="id" value="#{addCertVetOrg.selectedCertifikatTxt}" label="Certifikat" disabled="true"/>
+						    		<p:commandButton id="basic" value="..." onclick="dlg.show();" type="button" />  
+						    	</td>
+							</tr>
+							<tr>
+								<td class="left">
+	        						<p:commandButton actionListener="#{addCertVetOrg.add}" value="Dodaj" update=":panel, :display2"/>
+	        						<p:commandButton action="#{addCertVetOrg.cancel}" value="Odustani"/>
+								</td>
+							</tr>
+					  	</table>
+				    </h:form>
+				</p:panel> 
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:dialog id="dialog" header="Odabir certifikata" widgetVar="dlg" dynamic="true">  
+					<p:panel header="Certifikati" id="display2">
+					    <h:form prependId="false">  
+						    <p:dataTable var="o" value="#{addCertVetOrg.lazyModel}"
+						    	paginator="true" rows="20"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka"
+	            				rowKey="#{o.idCertifikat}"
+	            				selection="#{addCertVetOrg.selectedCertifikati}"
+	            				draggable="false"
+	            				resizable="false"> 
+	            				   
+	            				<p:column selectionMode="multiple" style="width:18px" />     
+	            				   
+						        <p:column id="modelHeader">  
+						            <f:facet name="header">  
+						                    Rbr  
+						            </f:facet>
+	    							<h:outputText value="#{o.idCertifikat}" style="float:left !important"/>
+						        </p:column>  
+						  
+						         <p:column>  
+						            <f:facet name="header">  
+						                    Šifra  
+						            </f:facet>  
+						            <h:outputText value="#{o.kodCertifikat}" style="float:left !important; text-align:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Mjera  
+						            </f:facet>  
+						            <h:outputText value="#{o.nazivMjera}" style="float:left !important; text-align:left !important"/>  
+						        </p:column>  
+						        
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Jezik  
+						            </f:facet>  
+						            <h:outputText value="#{o.jeziciTekst}" style="float:left !important; text-align:left !important"/>  
+						        </p:column> 
+						        
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Država  
+						            </f:facet>  
+						            <h:outputText value="#{o.nazivDrzava}" style="float:left !important; text-align:left !important"/>  
+						        </p:column> 
+						          
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Vrijedi od  
+						            </f:facet>  
+						            <h:outputText value="#{o.datumVrijediOd}" style="float:left !important">
+						            	<f:convertDateTime pattern="dd.MM.yyyy" />
+						            </h:outputText>  
+						        </p:column> 
+						        
+						    </p:dataTable> 
+						    
+						    <h:panelGroup id="cmd4close" layout="block" style="margin-top:5px; text-align:left !important">
+						    	<p:commandButton value="Odaberi" oncomplete="dlg.hide()" update=":panel" actionListener="#{addCertVetOrg.selectCode}"/>  
+							</h:panelGroup>
+						 </h:form>    
+					</p:panel>
+				</p:dialog>
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

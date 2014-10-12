@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"  
+    xmlns:ui="http://java.sun.com/jsf/facelets">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />         
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+               <p:panel header="Podaci o narudžbi" id="panel1">   
+	          	 <h:form> 
+                	<table>
+	                	<tr>
+					    	<td class="left"><h:outputLabel for="rbr" value="Broj narudžbe: " /></td>  
+					    	<td class="left"><h:outputText id="rbr" value="#{editOrdDeliv.db.idNarudzbe}"/></td>
+						</tr>
+						<tr>
+					    	<td class="left"><h:outputLabel for="datum" value="Datum narudžbe: " /></td>  
+					    	<td class="left">
+					    		<h:outputText id="datum" value="#{editOrdDeliv.db.datumNarudzbe}">
+					    			<f:convertDateTime pattern="dd.MM.yyyy" /> 
+					    		</h:outputText>
+					    	</td>
+						</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="narucitelj" value="Naručitelj: " /></td>  
+					    	<td class="left"><h:outputText id="narucitelj" value="#{editOrdDeliv.db.narucitelj}"/></td>
+						</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="oib" value="OIB: " /></td>  
+					    	<td class="left"><h:outputText id="oib" value="#{editOrdDeliv.selNarucitelj.oib}"/></td>
+						</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="adresa" value="Adresa: " /></td>
+					    	<td class="left"><h:outputText id="adresa" value="#{editOrdDeliv.selNarucitelj.address}"/></td>
+					  	</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="tel" value="Tel: " /></td>  
+					    	<td class="left"><h:outputText id="tel" value="#{editOrdDeliv.selNarucitelj.tel}"/></td>
+						</tr>
+					  	<tr>
+					    	<td class="left"><h:outputLabel for="fax" value="Fax: " /></td>  
+					    	<td class="left"><h:outputText id="fax" value="#{editOrdDeliv.selNarucitelj.fax}"/></td>
+						</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="veterinar" value="Naručitelj: " /></td>
+					    	<td class="left"><h:outputText id="veterinar" value="#{editOrdDeliv.vetKorisnik}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="dobavljac" value="Dobavljač: " /></td>
+					    	<td class="left"><h:outputText id="dobavljac" value="#{editOrdDeliv.selDobavljac.name}"/></td>
+					  	</tr>
+					  	<tr>				  
+					    	<td class="left"><h:outputLabel for="status" value="Status: " /></td>
+					    	<td class="left"><h:outputText id="status" value="#{editOrdDeliv.db.status}"/></td>
+					  	</tr>
+				  	</table>
+				  	<h:panelGroup id="back" layout="block" style="text-align:left !important; margin-top:5px;">
+						<p:commandButton value="Natrag" icon="ui-icon-document" actionListener="#{editOrdDeliv.cancel}" />
+					</h:panelGroup>
+					</h:form>
+				</p:panel>	
+				
+				<p:spacer width="20" height="20" />
+            	
+            	<p:panel id="details" header="Dokumenti za dostavu">
+            	
+            		<p:growl id="messages1"/> 
+            		
+            		<h:panelGroup layout="block">
+				    	<ui:repeat var="item" value="#{editOrdDeliv.currList}" varStatus="status">
+				    		
+					    	<table>
+			                	<tr>
+							    	<td class="left"><h:outputLabel for="vrsta" value="Vrsta dokumenta: " /></td>  
+							    	<td class="left"><h:outputText id="vrsta" value="#{item.doc.code}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"></td>  
+							    	<td class="left"><h:outputText id="opis" value="#{item.doc.desc}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="mjera" value="JMJ: " /></td>  
+							    	<td class="left"><h:outputText id="mjera" value="#{item.doc.unit}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="dodijeljeno" value="Dodijeljeno: " /></td>  
+							    	<td class="left"><h:outputText id="dodijeljeno" value="#{item.kolicina}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="jedCijena" value="Jed. cijena: " /></td>  
+							    	<td class="left">
+							    		<h:outputText id="jedCijena" value="#{item.doc.price}">
+							    			<f:convertNumber minFractionDigits="2" />
+							    		</h:outputText>
+							    		<h:outputText value="kn" style="margin-left: 2px !important;"/>
+							    	</td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="kolicina" value="Količina: " /></td>  
+							    	<td class="left"><h:outputText id="kolicina" value="#{item.kolicina}"/></td>
+								</tr>
+								<tr>
+							    	<td class="left"><h:outputLabel for="cijena" value="Cijena: " /></td>  
+							    	<td class="left">
+							    		<h:outputText id="cijena" value="#{item.cijena}">
+							    			<f:convertNumber minFractionDigits="2" />
+							    		</h:outputText>
+							    		<h:outputText value="kn" style="margin-left: 2px !important;"/>
+							    	</td>
+								</tr>
+							</table>
+							
+							<p:spacer width="20" height="20" />
+							
+				    	</ui:repeat>
+				    </h:panelGroup>
+				    
+				    <h:panelGroup id="command2" layout="block" style="text-align:right !important; margin-top:5px;" rendered="#{editOrdDeliv.step != 2}">
+					  	<p:commandButton value="Potvrdi" icon="ui-icon-document" onclick="dlg.show();" type="button" />
+					</h:panelGroup>
+            	</p:panel>
+            	
+            	 <h:panelGroup id="dlgContainer" layout="block">
+            	<p:dialog id="dialog" header="Odabir dokumenta" widgetVar="dlg" dynamic="true">  
+					    
+				  	<p:panel header="Dokumenti" id="display">
+				    	<h:form prependId="false">  
+						    <p:dataTable id="basic" var="o" value="#{editOrdDeliv.currList}"
+						    	paginator="true" rows="10"  
+	            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+	            				paginatorPosition="bottom"
+	            				emptyMessage="Nema podataka"
+	            				rowKey="#{o.idStavkaNarudzbe}"
+	            				selection="#{editOrdDeliv.selectedDocs}" 
+	            				selectionMode="multiple"
+	            				draggable="false"
+	            				resizable="false">  
+	            				
+						        <p:column id="modelHeader">  
+						            <f:facet name="header">  
+						                    Broj narudžbe 
+						            </f:facet>  
+						           	<h:outputText value="#{o.idNarudzbe}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Datum 
+						            </f:facet>  
+						            <h:outputText value="#{o.datumNarudzbe}" style="float:left !important">
+						            	<f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+						            </h:outputText>
+						        </p:column>  
+						  
+						  		<p:column>  
+						            <f:facet name="header">  
+						                    Šifra  
+						            </f:facet>  
+						            <h:outputText value="#{o.doc.code}" style="float:left !important"/>  
+						        </p:column>
+						  
+						        <p:column>  
+						            <f:facet name="header">  
+						                    Naziv 
+						            </f:facet>  
+						            <h:outputText value="#{o.doc.desc}" style="float:left !important"/>  
+						        </p:column>  
+						  
+						    </p:dataTable>  
+						    <h:panelGroup id="cmdSave" layout="block" style="text-align:right !important; margin-top:5px;">
+					  			<p:commandButton value="Potvrdi" icon="ui-icon-document" action="#{editOrdDeliv.confirm}" oncomplete="dlg.hide()" update=":dlgContainer, :details"/>
+							</h:panelGroup>
+						</h:form>    
+					</p:panel>  
+				</p:dialog>
+				</h:panelGroup>
+				
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"   
+    xmlns:p="http://primefaces.org/ui">  
+         
+	<h:head>  
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/common.css"/>
+		
+		<f:metadata>
+ 			<f:event listener="#{login.verifyUseLogin}" type="preRenderView"></f:event>
+		</f:metadata>
+	</h:head>
+
+	<h:body>  
+	
+ 		<div id="container" class="center">
+	  		<div id="header" >
+	  			<ui:include src="header.xhtml" />
+	  		</div>
+  		
+	  		<div id="navigation">
+                <ui:include src="global.xhtml" />             
+            </div>
+            
+            <div id="menu" style="background-color:#FFFFFF;">
+	            <ui:include src="menu.xhtml" />  
+		    </div>
+		    
+            <p:spacer width="20" height="20" />
+            
+            <div id="main">
+            	
+	           <p:panel header="Pretraga objekata" id="panel">   
+	          	 <h:form> 
+                	<table>
+	                	<tr>
+					    	<td class="left"><h:outputLabel for="naziv" value="Naziv:" /></td>  
+					    	<td class="left"><p:inputText id="naziv" value="#{est.naziv}" label="Naziv" /></td>
+						</tr>
+						<tr>				  
+					    	<td class="left"><h:outputLabel for="adresa" value="Adresa:" /></td>
+					    	<td class="left"><p:inputText id="adresa" value="#{est.adresa}" label="Adresa"/></td>
+					  	</tr>
+				  	</table>
+				  	<h:panelGroup id="command" layout="block" style="text-align:left !important">
+				  		<p:commandButton value="Nađi" icon="ui-icon-search" actionListener="#{est.search}" update=":display">
+			  				<f:attribute name="naziv" value="#{est.naziv}"/>
+			  				<f:attribute name="adresa" value="#{est.adresa}"/>
+			  			</p:commandButton>
+						<p:commandButton value="Obriši" icon="ui-icon-refresh" actionListener="#{est.clear}" onmousedown="basic.getPaginator().setPage(0)" update=":panel"/>
+					</h:panelGroup>
+					</h:form>
+				</p:panel> 
+				
+				<p:spacer width="20" height="20" />
+				
+				<p:panel header="Objekti" id="display">
+				    <h:form prependId="false">  
+					    <p:dataTable id="basicW" widgetVar="basic" var="o" value="#{est.lazyModel}"
+					    	paginator="true" rows="50"  
+            				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+            				paginatorPosition="bottom"
+            				emptyMessage="Nema podataka">  
+            				
+					        <p:column id="modelHeader">  
+					            <f:facet name="header">  
+					                    ID  
+					            </f:facet>  
+					             
+					            <h:commandLink id="detail" action="#{est.getDetail}">  
+					            	<f:setPropertyActionListener target="#{est.selected}" value="#{o.idObjekt}" />
+        							<h:outputText value="#{o.idObjekt}" style="float:left !important"/>  
+    							</h:commandLink>
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Naziv  
+					            </f:facet>  
+					            <h:outputText value="#{o.objekt}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Adresa 
+					            </f:facet>  
+					            <h:outputText value="#{o.adresa}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					  
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Telefon  
+					            </f:facet>  
+					            <h:outputText value="#{o.tel}" style="float:left !important; text-align:left !important"/>  
+					        </p:column>  
+					        
+					        <p:column>  
+					            <f:facet name="header">  
+					                    Email  
+					            </f:facet>  
+					            <h:outputText value="#{o.email}" style="float:left !important; text-align:left !important"/>  
+					        </p:column> 
+					    </p:dataTable>  
+					</h:form>    
+				</p:panel>
+            </div>
+    	
+           <div id="footer">
+               <ui:include src="footer.xhtml" /> 
+           </div>
+            
+        </div>    
+ 	</h:body>
+</html>

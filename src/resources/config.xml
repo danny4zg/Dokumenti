@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Config name="application">
+		<Property name="appname" value="test" type="java.lang.String"/>
+		<Property name="istest" value="true" type="java.lang.String"/>
+		<Property name="testconditionbitmapstring" value="11" type="java.lang.String"/>
+		<Config name="log">
+			<Property name="jvmLogger" value="true" type="java.lang.String"/>
+			<Property name="jvmLoggerRedirectsSystemOutErr" value="false" type="java.lang.String"/>
+			<Property name="jvmLogDir" value="c:/svis/log" type="java.lang.String"/>
+		</Config>
+		<Config name="mail">
+			<Property name="defaultServerMailAddr" value="prijava@iskon.hr" type="java.lang.String"/>
+			<Property name="mailSMTPServer" value="mail.iskon.hr" type="java.lang.String"/>
+			<Property name="defaultMailEncoding" value="UTF-8" type="java.lang.String"/>
+		</Config>
+		<Config name="webservice">
+			<Config name="proxyEndpoint">
+				<Property name="hr.iskon.atlantis.ecommerce.registration.integration.impl.IntegrationServicesImplDummyProxy" value="http://localhost:8081/TestWSServer/services/IntegrationServicesImplDummy" type="java.lang.String"/>
+			</Config>
+		</Config>
+		<Config name="datasourcename">
+			<!-- produkcija test --> 
+			<Property name="default" value="svisDS" type="java.lang.String"/>
+			<Property name="sys" value="svisDS" type="java.lang.String"/>
+		</Config>
+	</Config>
+
+	<Config name="xml">
+		<Config name="loader">
+			<Property name="classname" value="hr.kingict.framework.common.xml.DefaultXMLLoader" type="java.lang.String"/>
+			<Config name="location">
+				<Property name="type" value="CLASSPATH" type="java.lang.String"/>
+			</Config>
+		</Config>
+	</Config>
+</Configuration>
